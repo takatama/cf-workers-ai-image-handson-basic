@@ -1,14 +1,6 @@
-import html from './index.html'
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
-    if (url.pathname === "/") {
-      return new Response(html, {
-        headers: {
-          "content-type": "text/html;charset=UTF-8",
-        },
-      });
-    }
     if (request.method === "POST" && url.pathname === "/translate") {
       const formData = await request.formData();
       const prompt = formData.get("prompt");
@@ -19,7 +11,7 @@ export default {
       const prompt = formData.get("prompt");
       return await generateImage(prompt, env);
     }
-    return new Response("Not found", { status: 404 });
+    return env.ASSETS.fetch(request);
   },
 };
 
@@ -28,7 +20,7 @@ async function translatePrompt(prompt, env) {
     {
       role: "system",
       content: `
-  Translate the following Japanese text into a concise and vivid English prompt for image generation. Follow the specified artistic style closely (e.g., oil painting, watercolor, pop art) and avoid adding style elements not specified. Include only the essential subjects, actions, and visual details relevant to the style. Output the prompt text only, without quotation marks or additional comments.
+   If the following text is in Japanese, translate into a concise and vivid English prompt for image generation. Follow the specified artistic style closely (e.g., oil painting, watercolor, pop art) and avoid adding style elements not specified. Include only the essential subjects, actions, and visual details relevant to the style. Output the prompt text only, without quotation marks or additional comments.
   `,
     },
     { role: "user", content: prompt },

@@ -1,3 +1,6 @@
+const translateBtn = document.getElementById("translate-btn");
+const genImageBtn = document.getElementById("gen-image-btn");
+
 async function handleEventStream(response, textarea) {
   const reader = response.body.getReader();
   const decoder = new TextDecoder("utf-8");
@@ -25,11 +28,10 @@ async function handleEventStream(response, textarea) {
 }
 
 async function translateText() {
-  const button = document.getElementById("translate-btn");
   const errorMessage = document.getElementById("translate-error-message");
   const promptInput = document.getElementById("prompt");
 
-  button.disabled = true;
+  translateBtn.disabled = true;
   errorMessage.style.display = "none";
   const formData = new FormData();
   formData.set("prompt", promptInput.value);
@@ -51,13 +53,12 @@ async function translateText() {
     errorMessage.textContent = "翻訳に失敗しました。もう一度試してください。";
     errorMessage.style.display = "block";
   } finally {
-    button.disabled = false;
+    translateBtn.disabled = false;
   }
 }
 
 async function generateImage() {
-  const button = document.getElementById("gen-image-btn");
-  button.disabled = true;
+  genImageBtn.disabled = true;
   const errorMessage = document.getElementById("gen-image-error-message");
   errorMessage.style.display = "none";
   const translatedPrompt = document.getElementById("translated-prompt");
@@ -85,6 +86,6 @@ async function generateImage() {
       "画像生成に失敗しました。もう一度試すか、プロンプトを変えてください。";
     errorMessage.style.display = "block";
   } finally {
-    button.disabled = false;
+    genImageBtn.disabled = false;
   }
 }

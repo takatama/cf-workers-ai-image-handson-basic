@@ -1,14 +1,6 @@
-import html from './index.html'
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
-    if (url.pathname === "/") {
-      return new Response(html, {
-        headers: {
-          "content-type": "text/html;charset=UTF-8",
-        },
-      });
-    }
     if (request.method === "POST" && url.pathname === "/translate") {
       const formData = await request.formData();
       const prompt = formData.get("prompt");
@@ -19,7 +11,7 @@ export default {
       const prompt = formData.get("prompt");
       return await generateImage(prompt, env);
     }
-    return new Response("Not found", { status: 404 });
+    return env.ASSETS.fetch(request);
   },
 };
 

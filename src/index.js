@@ -20,8 +20,8 @@ async function translatePrompt(prompt, env) {
     {
       role: "system",
       content: `
-   If the following text is in Japanese, translate into a concise and vivid English prompt for image generation. Follow the specified artistic style closely (e.g., oil painting, watercolor, pop art) and avoid adding style elements not specified. Include only the essential subjects, actions, and visual details relevant to the style. Output the prompt text only, without quotation marks or additional comments.
-  `,
+Translate the following Japanese text into a concise and descriptive English prompt for image generation. Ensure the prompt adheres to the specified artistic style (e.g., oil painting, watercolor, pop art, or other specified), but explicitly exclude any cartoon or comic-style elements. Focus on clearly describing essential subjects, actions, and visual details for the image without introducing elements beyond the original content or style. Output the result as a single English sentence without quotation marks, comments, or additional formatting.
+`
     },
     { role: "user", content: prompt },
   ];
